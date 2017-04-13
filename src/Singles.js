@@ -1,4 +1,5 @@
 import React from 'react';
+import ShotThumb from './ShotThumb';
 
 class Singles extends React.Component {
 	componentDidMount() {
@@ -33,7 +34,7 @@ class Singles extends React.Component {
 				console.log(xhr.response);
 				if(xhr.status === 200) {
 					// add to state
-					this.addSingle(xhr.response);
+					this.addSingle(xhr.response.shot);
 				}
 			}
 		};
@@ -67,6 +68,9 @@ class Singles extends React.Component {
 				<a href="#" className="btn new-single u-fr">+ New single</a>
 				<section className="single-list">
 					{/* for each project print project */}
+					{
+						Object.keys(this.props.singles).map(key => <ShotThumb index={key} key={key} shot={this.props.singles[key]} />)
+					}
 					<p>Single 1</p>
 					<p>Single 2</p>
 					<p>Single 3</p>

@@ -28,7 +28,7 @@ class App extends Component {
 		return (
 			<div className="App">
 				<MainNav />
-				<Singles addSingle={this.addSingle} />
+				<Singles singles={this.state.singles} addSingle={this.addSingle} />
 			</div>
 		);
 	}
