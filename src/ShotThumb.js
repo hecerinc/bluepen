@@ -13,6 +13,8 @@ class ShotThumb extends React.Component {
 						<figcaption>
 							<a href="#"><span className="name">{shot.title}</span></a>
 						</figcaption>
+						<a href="#" className="rename-btn">Rename</a>
+						<a href="#" className="delete-btn">Delete shot</a>
 					</figure>
 				</div>
 			</article>

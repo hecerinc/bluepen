@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import MainNav from './MainNav';
 // import Projects from './Projects';
 import Singles from './Singles';
-// import logo from './logo.svg';
-// import './App.css';
 
 class App extends Component {
 	constructor() {
@@ -21,7 +19,7 @@ class App extends Component {
 	addSingle(single) {
 		const singles = {...this.state.singles};
 		const timestamp = Date.now();
-		singles['single-' +timestamp] = single;
+		singles['single-' + timestamp] = single;
 		this.setState({singles});
 	}
 	render() {

@@ -34,14 +34,14 @@ class Singles extends React.Component {
 				console.log(xhr.response);
 				if(xhr.status === 200) {
 					// add to state
-					this.addSingle(xhr.response.shot);
+					this.createShot(xhr.response.shot);
 				}
 			}
 		};
 		fd.append('file_upload', file);
 		xhr.send(fd);
 	}
-	addSingle(response) {
+	createShot(response) {
 		let now = Date.now();
 		const single = {
 			title: response.prettyname,
@@ -67,13 +67,9 @@ class Singles extends React.Component {
 				</ul>
 				<a href="#" className="btn new-single u-fr">+ New single</a>
 				<section className="single-list">
-					{/* for each project print project */}
 					{
 						Object.keys(this.props.singles).map(key => <ShotThumb index={key} key={key} shot={this.props.singles[key]} />)
 					}
-					<p>Single 1</p>
-					<p>Single 2</p>
-					<p>Single 3</p>
 				</section>
 				<div id="dropzone" style={{width: '200px', height: '200px', border: '2px dashed #000'}}>
 					<div className="centre-aligned">
