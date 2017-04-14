@@ -1,11 +1,11 @@
 import React from 'react';
 
-class Singles extends React.Component {
+class Comment extends React.Component {
 	render() {
 		return (
-			<h2>Singles</h2>
+			<p>Comment</p>
 		)
 	}
 }
 
-export default Singles;
+export default Comment;

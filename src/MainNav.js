@@ -11,6 +11,7 @@ class MainNav extends React.Component {
 					<ul>
 						<li><a href="#">Projects</a></li>
 						<li><a href="#">Singles</a></li>
+						<li><a href="#" onClick={(e) => {this.props.loadSampleData(e)}}>Load Sample Data</a> </li>
 						<li className="logOut"><a href="#">Log out</a></li>
 					</ul>
 				</nav>

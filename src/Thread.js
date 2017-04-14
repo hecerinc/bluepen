@@ -1,11 +1,15 @@
 import React from 'react';
+import Comment from './Comment';
 
-class Singles extends React.Component {
+
+class Thread extends React.Component {
 	render() {
 		return (
-			<h2>Singles</h2>
+			<div className="thread-container">
+				<Comment />
+			</div>
 		)
 	}
 }
 
-export default Singles;
+export default Thread;
