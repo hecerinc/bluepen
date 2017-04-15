@@ -11,11 +11,29 @@ module.exports = {
 			"annotations": {
 				"annot-123456": {
 					"x": 160,
-					"y": 400
+					"y": 400,
+					"comments": [
+						{
+							"id": "comment-20912",
+							"author": "Hector Rincon",
+							"body": "Hello world new comment",
+							"created": Date.now(),
+							"modified": Date.now()
+						}
+					]
 				},
 				"annot-408292": {
 					"x": 660,
-					"y": 200
+					"y": 200,
+					"comments" : [
+						{
+							"id": "comment-12345",
+							"author": "Hector Rincon",
+							"body": "Another comment",
+							"created": Date.now(),
+							"modified": Date.now()
+						}
+					]
 				}
 			}
 		}

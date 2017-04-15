@@ -2,6 +2,23 @@ import React from 'react';
 import Shot from './Shot';
 
 class Feedback extends React.Component {
+	constructor() {
+		super();
+
+		this.toggleIsBlank = this.toggleIsBlank.bind(this);
+
+		this.state = {
+			isBlank: false //there's something open
+		};
+	}
+	toggleIsBlank(val) {
+		this.setState({isBlank: val});
+	}
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	if(nextState.hasOwnProperty('isBlank'))
+	// 		return false;
+	// 	return true;
+	// }
 	render() {
 		return (
 			<section className="feedback">
@@ -14,7 +31,18 @@ class Feedback extends React.Component {
 					<a href="#" className="u-fr share btn">Share design!</a>
 				</div>
 				<hr/>
-				<Shot addNewAnnotationAtPoint={this.props.addNewAnnotationAtPoint} key="single-1492204500794" index="single-1492204500794" shot={this.props.singles["single-1492204500794"]} />
+				{/* get this value from url */}
+				<Shot 
+					key="single-1492204500794" 
+					index="single-1492204500794" 
+					isBlank={this.state.isBlank} 
+					toggleIsBlank={this.toggleIsBlank} 
+					deleteNote={this.props.deleteNote} 
+					shot={this.props.singles["single-1492204500794"]} 
+					moveAnnotationToPoint={this.props.moveAnnotationToPoint}
+					addNewAnnotationAtPoint={this.props.addNewAnnotationAtPoint} 
+					addCommentToThreadInSingle={this.props.addCommentToThreadInSingle} 
+				/>
 			</section>
 		)
 	}

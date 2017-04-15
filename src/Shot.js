@@ -2,14 +2,43 @@ import React from 'react';
 import Annotation from './Annotation';
 
 class Shot extends React.Component {
+	constructor() {
+		super();
+
+		this.handleTouch = this.handleTouch.bind(this);
+		this.updatePending = this.updatePending.bind(this);
+
+		this.state = {
+			lastCreated: null,
+			isPending: null // a "pending" note is a new note that has text written to its textarea
+		}
+	}
 	handleTouch(event) {
 		const canvas = document.getElementById('shot-img');
-	    const rect = canvas.getBoundingClientRect();
-	    const x = Math.round(event.clientX - rect.left);
-	    const y = Math.round(event.clientY - rect.top);
-	    // console.log("x: " + x + " y: " + y);
-	    // Add annotation to state
-	    this.props.addNewAnnotationAtPoint(this.props.index, x, y);
+		const rect = canvas.getBoundingClientRect();
+		const x = Math.round(event.clientX - rect.left);
+		const y = Math.round(event.clientY - rect.top);
+
+		// Add annotation to state
+		if(!this.props.isBlank && this.state.isPending == null) { // if there are no blank annotations open, create a new one
+			this.props.toggleIsBlank(true); // tell the feedback container there's a blank annotation open
+			const lastId = this.props.addNewAnnotationAtPoint(this.props.index, x, y);
+			this.setState({lastCreated: lastId});
+		}
+		else if(this.state.isPending != null) { // if there is, check it's not pending
+			// just move it to new location
+			this.props.moveAnnotationToPoint(this.props.index, this.state.isPending, x, y);
+		}
+		else { // if there is,
+			// just close it (effectively, delete the new one):
+			// get last annotation created
+			// delete it from state
+			this.props.deleteNote(this.props.index, this.state.lastCreated);
+			this.props.toggleIsBlank(false);
+		}
+	}
+	updatePending(pendingId) {
+		this.setState({isPending: pendingId});
 	}
 	render() {
 		const shot = this.props.shot;
@@ -23,7 +52,17 @@ class Shot extends React.Component {
 						<img id="shot-img" onClick={(e) => this.handleTouch(e)} src={shot.image} alt={shot.title} />
 						<div className="annotations">
 							{
-								Object.keys(annotations).map((key) => <Annotation key={key} details={annotations[key]} />)
+								Object.keys(annotations).map((key) => 
+									<Annotation 
+										key={key} 
+										index={key} 
+										annotations={annotations} 
+										singleid={this.props.index} 
+										toggleIsBlank={this.props.toggleIsBlank} 
+										updatePending={this.updatePending}
+										addCommentToThreadInSingle={this.props.addCommentToThreadInSingle} 
+									/>
+								)
 							}
 						</div>
 					</div>

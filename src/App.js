@@ -12,6 +12,9 @@ class App extends Component {
 		this.addSingle = this.addSingle.bind(this);
 		this.loadSampleData = this.loadSampleData.bind(this);
 		this.addNewAnnotationAtPoint = this.addNewAnnotationAtPoint.bind(this);
+		this.addCommentToThreadInSingle = this.addCommentToThreadInSingle.bind(this);
+		this.deleteNote = this.deleteNote.bind(this);
+		this.moveAnnotationToPoint = this.moveAnnotationToPoint.bind(this);
 
 		// this.state = {
 		// 	singles: {},
@@ -34,6 +37,40 @@ class App extends Component {
 		annotations['annot-' + timestamp] = {x,y};
 		single['annotations'] = annotations;
 		this.setState({singles});
+
+		// return the newly added key so that the Shot component 
+		// is aware which one is the last annotation crated 
+		// (we need this for deleting blank notes)
+		
+		return 'annot-'+timestamp; 
+	}
+	moveAnnotationToPoint(singleid, annot, x, y) {
+		const singles = {...this.state.singles};
+		let single = singles[singleid];
+		var annotations = single['annotations'];
+		annotations[annot].x = x;
+		annotations[annot].y = y;
+		this.setState({singles});
+	}
+	deleteNote(index, annotid) {
+		const singles = {...this.state.singles};
+		let single = singles[index];
+		var annotations = single['annotations'];
+		delete annotations[annotid];
+		// single['annotations'] = annotations;
+		this.setState({singles});
+	}
+	addCommentToThreadInSingle(singleid, annot, newcomment) {
+		const singles = {...this.state.singles};
+		let single = singles[singleid];
+		var annotations = single['annotations'];
+		var annotation = annotations[annot];
+		if(annotation.hasOwnProperty('comments'))
+			annotation.comments.push(newcomment);
+		else
+			annotation['comments'] = [newcomment];
+		single['annotations'] = annotations;
+		this.setState({singles});
 	}
 	addSingle(single) {
 		const singles = {...this.state.singles};
@@ -45,7 +82,13 @@ class App extends Component {
 		return (
 			<div className="App">
 				<MainNav loadSampleData={this.loadSampleData} />
-				<Feedback addNewAnnotationAtPoint={this.addNewAnnotationAtPoint} singles={this.state.singles} />
+				<Feedback 
+					singles={this.state.singles} 
+					deleteNote={this.deleteNote} 
+					moveAnnotationToPoint={this.moveAnnotationToPoint}
+					addNewAnnotationAtPoint={this.addNewAnnotationAtPoint} 
+					addCommentToThreadInSingle={this.addCommentToThreadInSingle} 
+				/>
 				{/*<Singles singles={this.state.singles} addSingle={this.addSingle} />*/}
 			</div>
 		);
