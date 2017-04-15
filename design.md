@@ -55,6 +55,7 @@
 - Cada comment puede ser borrado
 - Support Guest comments (con nombre)
 - Shrink un chingo las fotos (por si subes algo monstruoso)
+- Highlight the new notes (since last saw)
 - Upload new version
 	- Clone comments from previous version?
 - Group by Project o Singles
