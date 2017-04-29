@@ -20,6 +20,7 @@ class App extends Component {
 		// 	singles: {},
 		// 	projects: {}
 		// };
+		// TODO: change this back to blank state
 		this.state = sampledata;
 	}
 

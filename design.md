@@ -83,3 +83,41 @@ De ellos:
 - Keyboard shortcuts! Arrow left & right to navigate between designs in a project. Esc to go up a level. Command-Enter to post a comment.
 - Te dice quien esta viendo el design al mismo tiempo que tu
 - Te pide a fuerza un mail para poder poner un commentario
+
+
+## Annotation state diagram
+
+Components for annotations:
+
+- Shot
+	- Annotation
+		- CommentForm
+
+
+### State
+
+What does each component need to know to effectively show/hide annotations?
+
+The annotation will decide whether to show itself to the right or to the left depending on the amount of space available on open
+
+- Shot: 
+	- `isSomethingOpen`: whether something (an annotation) is open (clickPermanent)
+	- `isNewOpen`: whether there's a **new** annotation open
+	- `pending`: a "pending" note is a new note that has text written to its textarea (need this to move it instead of creating new one)
+	- `lastCreated`: which annotation did I last create
+- Annotation:
+	- `hovered`: am I hovered?
+	- `isHoverPermanent`: whether I survive hover out
+	- `isClickPermanent`: whether I survive click out
+	- `isBlank`: do I have something written? 
+	- `isFocused`: am I focused?
+	
+Something is hover permanent when: 
+	- It's new
+	- It's new AND focused
+
+Something is click permanent when: 
+	- It's new AND !blank (focused or not focused)
+	- It's !new AND focused
+	- It's !new AND !blank AND (focused or !focused)
+

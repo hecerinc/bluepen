@@ -13,30 +13,24 @@ class CommentForm extends React.Component {
 			"modified": timestamp
 		}
 		this.props.addCommentToThreadInSingle(this.props.singleid, this.props.annotation, comment);
-		// no blank note is open now (note is no longer blank)
-		this.props.toggleIsBlank(false);
+		this.props.updateIsBlank(true); // This annotation is now blank (nothing is written)
+		// No blank note is open, let Shot know
+		this.props.updateNewOpenState(false);
 
-		this.newcomment.value = "";
-		this.props.togglePermanence(false);
-		this.props.updatePending(null);
+		this.newcomment.value = ""; // reset textarea
 	}
 	handleFocus(e) {
-		this.props.togglePermanence(true);
+		this.props.updateFocus(true);
 	}
 	handleBlur(e) {
-		if(e.target.value === "")
-			this.props.togglePermanence(false);
+		this.props.updateFocus(false);
 	}
 	handleType(e) {
-		if(!this.props.isNew) // can only be blank or pending if you are also new
-			return true;
 		if(e.target.value === ""){
-			this.props.toggleIsBlank(true);
-			this.props.updatePending(null);
+			this.props.updateIsBlank(true);
 		}
 		else{
-			this.props.toggleIsBlank(false);
-			this.props.updatePending(this.props.annotation);
+			this.props.updateIsBlank(false);
 		}
 	}
 	render() {
