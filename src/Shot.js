@@ -7,8 +7,12 @@ class Shot extends React.Component {
 
 		this.handleTouch = this.handleTouch.bind(this);
 		this.updatePending = this.updatePending.bind(this);
+		this.updateOpenState = this.updateOpenState.bind(this);
+		this.updateNewOpenState = this.updateNewOpenState.bind(this);
 
 		this.state = {
+			//isSomethingOpen: false, // permanently so
+			isNewOpen: false, // is a new (blank) note open?
 			lastCreated: null,
 			isPending: null // a "pending" note is a new note that has text written to its textarea
 		}
@@ -20,9 +24,9 @@ class Shot extends React.Component {
 		const y = Math.round(event.clientY - rect.top);
 
 		// Add annotation to state
-		if(!this.props.isBlank && this.state.isPending == null) { // if there are no blank annotations open, create a new one
-			this.props.toggleIsBlank(true); // tell the feedback container there's a blank annotation open
+		if(!this.state.isNewOpen && this.state.isPending == null) { // if there are no blank annotations open, create a new one
 			const lastId = this.props.addNewAnnotationAtPoint(this.props.index, x, y);
+			this.updateNewOpenState(true); // tell the feedback container there's a new blank annotation open
 			this.setState({lastCreated: lastId});
 		}
 		else if(this.state.isPending != null) { // if there is, check it's not pending
@@ -34,8 +38,17 @@ class Shot extends React.Component {
 			// get last annotation created
 			// delete it from state
 			this.props.deleteNote(this.props.index, this.state.lastCreated);
-			this.props.toggleIsBlank(false);
+			this.updateNewOpenState(false);
 		}
+	}
+	updateOpenState (value, isNew = false) {
+		if(!isNew)
+			this.setState({isSomethingOpen: value});
+		else
+			this.setState({isSomethingOpen: value, isNewOpen: true}); //TODO: maybe change this, it's not very straightforward
+	}
+	updateNewOpenState(value) {
+		this.setState({isNewOpen: value});
 	}
 	updatePending(pendingId) {
 		this.setState({isPending: pendingId});
@@ -58,7 +71,7 @@ class Shot extends React.Component {
 										index={key} 
 										annotations={annotations} 
 										singleid={this.props.index} 
-										toggleIsBlank={this.props.toggleIsBlank} 
+										updateNewOpenState={this.updateNewOpenState} 
 										updatePending={this.updatePending}
 										addCommentToThreadInSingle={this.props.addCommentToThreadInSingle} 
 									/>
