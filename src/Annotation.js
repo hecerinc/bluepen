@@ -2,7 +2,7 @@ import React from 'react';
 import Thread from './Thread';
 import CommentForm from './CommentForm';
 import classNames from 'classnames';
-
+import {isRightMarginEnough, annotationWidth} from './utils';
 
 class Annotation extends React.Component {
 	constructor() {
@@ -18,6 +18,7 @@ class Annotation extends React.Component {
 			isClickPerm: false,
 			isBlank: true, // do I have something written?
 			isFocused: false,
+			position: 'left',
 			// isNew: this is best calculated on render because we can't pass initial state to new annotation on constructor
 			hovered: false,
 		}
@@ -52,6 +53,14 @@ class Annotation extends React.Component {
 	// componentDidUpdate() {
 	// 	this.checkPerm();
 	// } 
+	componentWillUpdate(nextProps, nextState) {
+		const annot = this.props.annotations[this.props.index];
+		if(!isRightMarginEnough(annot.x))
+			nextState['position'] = 'right';
+		else
+			nextState['position'] = 'left';
+
+	}
 	checkPerm() {
 		const isNew = !this.props.annotations[this.props.index].hasOwnProperty('comments');
 		if(!this.state.isBlank || (!isNew && this.state.isFocused)){
@@ -71,6 +80,7 @@ class Annotation extends React.Component {
 			'permanent': this.state.isClickPerm || this.state.isHoverPerm, 
 			'open': this.state.hovered
 		});
+		const left = this.state.position === 'left' ? 0 : (-1*annotationWidth) + 'px';
 		return (
 			<aside className={annotClass} 
 				style={{position: 'absolute', top: details.y + 'px', left: details.x + 'px'}}
@@ -78,7 +88,7 @@ class Annotation extends React.Component {
 				onMouseLeave={e => this.hoverOut(e)}
 			>
 				<i className="marker"></i>
-				<div className="balloon">
+				<div className="balloon" style={{position: 'absolute', 'left': left}}>
 					{(() => {
 						if(!isNew)
 							return <Thread comments={details.comments} />
