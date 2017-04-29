@@ -1,5 +1,6 @@
 import React from 'react';
 import Annotation from './Annotation';
+import { isRightMarginEnough } from './utils';
 
 class Shot extends React.Component {
 	constructor() {
@@ -16,13 +17,19 @@ class Shot extends React.Component {
 	handleTouch(event) {
 		const canvas = document.getElementById('shot-img');
 		const rect = canvas.getBoundingClientRect();
-		const x = Math.round(event.clientX - rect.left);
+		let x = Math.round(event.clientX - rect.left);
 		const y = Math.round(event.clientY - rect.top);
+		let isRight = false;
+		if(!isRightMarginEnough(event)){
+		// 	// draw to the right
+		// 	// x -= 190; // TODO: change this back to 250 when CSS implemented
+			isRight = true;
+		}
 
 		// Add annotation to state
 		if(!this.props.isBlank && this.state.isPending == null) { // if there are no blank annotations open, create a new one
 			this.props.toggleIsBlank(true); // tell the feedback container there's a blank annotation open
-			const lastId = this.props.addNewAnnotationAtPoint(this.props.index, x, y);
+			const lastId = this.props.addNewAnnotationAtPoint(this.props.index, x, y, isRight);
 			this.setState({lastCreated: lastId});
 		}
 		else if(this.state.isPending != null) { // if there is, check it's not pending
@@ -59,6 +66,7 @@ class Shot extends React.Component {
 										annotations={annotations} 
 										singleid={this.props.index} 
 										toggleIsBlank={this.props.toggleIsBlank} 
+										growFromRight={this.props.growFromRight} 
 										updatePending={this.updatePending}
 										addCommentToThreadInSingle={this.props.addCommentToThreadInSingle} 
 									/>

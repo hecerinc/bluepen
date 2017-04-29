@@ -24,8 +24,10 @@ class CommentForm extends React.Component {
 		this.props.togglePermanence(true);
 	}
 	handleBlur(e) {
-		if(e.target.value === "")
+		if(e.target.value === ""){
 			this.props.togglePermanence(false);
+			// this.props.growFromRight(this.props.singleid, this.props.annotation, false);
+		}
 	}
 	handleType(e) {
 		if(!this.props.isNew) // can only be blank or pending if you are also new

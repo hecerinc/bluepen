@@ -38,6 +38,7 @@ class Feedback extends React.Component {
 					isBlank={this.state.isBlank} 
 					toggleIsBlank={this.toggleIsBlank} 
 					deleteNote={this.props.deleteNote} 
+					growFromRight={this.props.growFromRight} 
 					shot={this.props.singles["single-1492204500794"]} 
 					moveAnnotationToPoint={this.props.moveAnnotationToPoint}
 					addNewAnnotationAtPoint={this.props.addNewAnnotationAtPoint} 

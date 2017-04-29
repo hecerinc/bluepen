@@ -10,16 +10,18 @@ class App extends Component {
 		super();
 
 		this.addSingle = this.addSingle.bind(this);
+		this.deleteNote = this.deleteNote.bind(this);
+		this.growFromRight = this.growFromRight.bind(this);
 		this.loadSampleData = this.loadSampleData.bind(this);
+		this.moveAnnotationToPoint = this.moveAnnotationToPoint.bind(this);
 		this.addNewAnnotationAtPoint = this.addNewAnnotationAtPoint.bind(this);
 		this.addCommentToThreadInSingle = this.addCommentToThreadInSingle.bind(this);
-		this.deleteNote = this.deleteNote.bind(this);
-		this.moveAnnotationToPoint = this.moveAnnotationToPoint.bind(this);
 
 		// this.state = {
 		// 	singles: {},
 		// 	projects: {}
 		// };
+		// TODO: Change this back to default initial (blank) state
 		this.state = sampledata;
 	}
 
@@ -29,12 +31,12 @@ class App extends Component {
 		this.setState(sampledata);
 	}
 	// State mutating methods
-	addNewAnnotationAtPoint(index, x, y) {
+	addNewAnnotationAtPoint(index, x, y, growsFromRight) {
 		const singles = {...this.state.singles};
 		let single = singles[index];
 		var annotations = {...single['annotations']};
 		var timestamp = Date.now();
-		annotations['annot-' + timestamp] = {x,y};
+		annotations['annot-' + timestamp] = {x,y, growsFromRight};
 		single['annotations'] = annotations;
 		this.setState({singles});
 
@@ -43,6 +45,13 @@ class App extends Component {
 		// (we need this for deleting blank notes)
 		
 		return 'annot-'+timestamp; 
+	}
+	growFromRight(singleid, annot, value) {
+		const singles = {...this.state.singles};
+		let single = singles[singleid];
+		var annotations = single['annotations'];
+		annotations[annot].growsFromRight = value;
+		this.setState({singles});
 	}
 	moveAnnotationToPoint(singleid, annot, x, y) {
 		const singles = {...this.state.singles};
@@ -85,6 +94,7 @@ class App extends Component {
 				<Feedback 
 					singles={this.state.singles} 
 					deleteNote={this.deleteNote} 
+					growFromRight={this.growFromRight} 
 					moveAnnotationToPoint={this.moveAnnotationToPoint}
 					addNewAnnotationAtPoint={this.addNewAnnotationAtPoint} 
 					addCommentToThreadInSingle={this.addCommentToThreadInSingle} 

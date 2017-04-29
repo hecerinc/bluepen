@@ -12,6 +12,7 @@ module.exports = {
 				"annot-123456": {
 					"x": 160,
 					"y": 400,
+					"growsFromRight": false,
 					"comments": [
 						{
 							"id": "comment-20912",
@@ -25,6 +26,7 @@ module.exports = {
 				"annot-408292": {
 					"x": 660,
 					"y": 200,
+					"growsFromRight": false,
 					"comments" : [
 						{
 							"id": "comment-12345",

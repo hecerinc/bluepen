@@ -20,7 +20,17 @@ body {
 	cursor: auto;
 
 }
-.annotation.closed:hover .balloon {
+.annotation.fromRight .marker {
+	float: right;
+	left: 15px;
+}
+.annotation .balloon {
+	display: none;
+}
+.annotation.open .balloon, .annotation.permanent .balloon {
+	display: block;
+}
+/*.annotation.closed:hover .balloon {
 	display: block !important;
 }
 .annotation.permanent .balloon {
@@ -32,3 +42,4 @@ body {
 .annotation .balloon {
 	display: none;
 }
+*/
