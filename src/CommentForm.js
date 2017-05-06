@@ -16,6 +16,7 @@ class CommentForm extends React.Component {
 		this.props.updateIsBlank(true); // This annotation is now blank (nothing is written)
 		// No blank note is open, let Shot know
 		this.props.updateNewOpenState(false);
+		this.props.updatePending(null);
 
 		this.newcomment.value = ""; // reset textarea
 	}
