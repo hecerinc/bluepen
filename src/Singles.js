@@ -1,5 +1,6 @@
 import React from 'react';
 import ShotThumb from './ShotThumb';
+// import {Route} from 'react-router-dom';
 
 class Singles extends React.Component {
 	componentDidMount() {
@@ -68,7 +69,9 @@ class Singles extends React.Component {
 				<a href="#" className="btn new-single u-fr">+ New single</a>
 				<section className="single-list">
 					{
-						Object.keys(this.props.singles).map(key => <ShotThumb index={key} key={key} shot={this.props.singles[key]} />)
+						Object.keys(this.props.singles).map(key => 
+							<ShotThumb match={this.props.match} index={key} key={key} shot={this.props.singles[key]} />
+						)
 					}
 				</section>
 				<div id="dropzone" style={{width: '200px', height: '200px', border: '2px dashed #000'}}>
@@ -76,6 +79,7 @@ class Singles extends React.Component {
 						<span>Drop your image here</span>
 					</div>
 				</div>
+				{/*<Route path={} component ={ShotThumb} /> */}
 				{/*}
 				<input type="file" name="hello" id="myFile" />
 				<button onClick={this.uploadFile}>Upload</button>

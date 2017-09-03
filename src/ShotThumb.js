@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 class ShotThumb extends React.Component {
 	render() {
@@ -7,9 +8,9 @@ class ShotThumb extends React.Component {
 			<article className="shot">
 				<div className="container">
 					<figure>
-						<a href="#">
+						<Link to={this.props.match.url+'/'+this.props.index}>
 							<img src={shot.thumb} alt={shot.title} />
-						</a>
+						</Link>
 						<figcaption>
 							<a href="#"><span className="name">{shot.title}</span></a>
 						</figcaption>

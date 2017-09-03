@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 class MainNav extends React.Component {
 	render() {
@@ -9,9 +10,8 @@ class MainNav extends React.Component {
 				</a>
 				<nav className="main-nav">
 					<ul>
-						<li><a href="#">Projects</a></li>
-						<li><a href="#">Singles</a></li>
-						<li><a href="#" onClick={(e) => {this.props.loadSampleData(e)}}>Load Sample Data</a> </li>
+						<li><Link to="/projects">Projects</Link></li>
+						<li><Link to="/shots">Shots</Link></li>
 						<li className="logOut"><a href="#">Log out</a></li>
 					</ul>
 				</nav>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import {Route} from 'react-router-dom';
 import MainNav from './MainNav';
-// import Projects from './Projects';
-// import Singles from './Singles';
+import Projects from './Projects';
+import Singles from './Singles';
 import Feedback from './Feedback';
 import sampledata from './sampledata';
 
@@ -10,7 +11,6 @@ class App extends Component {
 		super();
 
 		this.addSingle = this.addSingle.bind(this);
-		this.loadSampleData = this.loadSampleData.bind(this);
 		this.addNewAnnotationAtPoint = this.addNewAnnotationAtPoint.bind(this);
 		this.addCommentToThreadInSingle = this.addCommentToThreadInSingle.bind(this);
 		this.deleteNote = this.deleteNote.bind(this);
@@ -24,11 +24,6 @@ class App extends Component {
 		this.state = sampledata;
 	}
 
-	loadSampleData(event) {
-		event.preventDefault();
-		// load data here
-		this.setState(sampledata);
-	}
 	// State mutating methods
 	addNewAnnotationAtPoint(index, x, y) {
 		const singles = {...this.state.singles};
@@ -82,15 +77,20 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				<MainNav loadSampleData={this.loadSampleData} />
-				<Feedback 
-					singles={this.state.singles} 
-					deleteNote={this.deleteNote} 
-					moveAnnotationToPoint={this.moveAnnotationToPoint}
-					addNewAnnotationAtPoint={this.addNewAnnotationAtPoint} 
-					addCommentToThreadInSingle={this.addCommentToThreadInSingle} 
-				/>
+				<MainNav />
+				<Route path="/projects" render={props => <Projects hello="world" />}/>
+				<Route exact path="/shots"  render={props => <Singles {...props} singles={this.state.singles} addSingle={this.addSingle} />} />
+				<Route path="/shots/:shotId" render={props => 
+					<Feedback 
+						singles={this.state.singles} 
+						deleteNote={this.deleteNote} 
+						moveAnnotationToPoint={this.moveAnnotationToPoint}
+						addNewAnnotationAtPoint={this.addNewAnnotationAtPoint} 
+						addCommentToThreadInSingle={this.addCommentToThreadInSingle} 
+					/>
+				} />
 				{/*<Singles singles={this.state.singles} addSingle={this.addSingle} />*/}
+
 			</div>
 		);
 	}

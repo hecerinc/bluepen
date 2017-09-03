@@ -4,7 +4,6 @@ import Annotation from './Annotation';
 class Shot extends React.Component {
 	constructor() {
 		super();
-
 		this.handleTouch = this.handleTouch.bind(this);
 		this.updatePending = this.updatePending.bind(this);
 		this.updateOpenState = this.updateOpenState.bind(this);
@@ -62,7 +61,7 @@ class Shot extends React.Component {
 					<h3>{shot.title}</h3>
 					<h5>{shot.description}</h5>
 					<div className="img-container" style={{position: 'relative'}}>
-						<img id="shot-img" onClick={(e) => this.handleTouch(e)} src={shot.image} alt={shot.title} />
+						<img id="shot-img" onClick={(e) => this.handleTouch(e)} src={process.env.PUBLIC_URL + '/' + shot.image} alt={shot.title} />
 						<div className="annotations">
 							{
 								Object.keys(annotations).map((key) => 
